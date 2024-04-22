@@ -63,15 +63,18 @@ class Tree:
 
     def deleteTree(self):
         # TODO 1
+        """ Method for deleting tree"""
         self.root = None
 
     def printTree(self):
         # TODO 1
+        """ Method for printing tree in order"""
         if self.root is not None:
             self._printInorderTree(self.root)
 
     def _printInorderTree(self, node):
         # TODO 1
+        """Method for printing tree in inorder"""
         if node is not None:
             self._printInorderTree(node.left)
             print(str(node.data) + ' ')
@@ -79,10 +82,40 @@ class Tree:
 
     def _printPreorderTree(self, node):
         # TODO 2
-        pass
+        if node is not None:
+            print(str(node.data) + ' ', end='')
+            self._printPreorderTree(node.left)
+            self._printPreorderTree(node.right)
 
     def _printPostorderTree(self, node):
         # TODO 2
-        pass
+        if node is not None:
+            self._printPostorderTree(node.left)
+            self._printPostorderTree(node.right)
+            print(str(node.data) + ' ', end='')
 
+import unittest
 
+class TestTreeMethods(unittest.TestCase):
+    def setUp(self):
+        self.tree = Tree()
+        self.tree.add(5)
+        self.tree.add(3)
+        self.tree.add(7)
+        self.tree.add(2)
+        self.tree.add(4)
+
+    def test_find_existing(self):
+        node = self.tree.find(3)
+        self.assertEqual(node.data, 3)
+
+    def test_find_nonexistent(self):
+        node = self.tree.find(6)
+        self.assertIsNone(node)
+
+    def test_find_root(self):
+        node = self.tree.find(5)
+        self.assertEqual(node.data, 5)
+
+if __name__ == '__main__':
+    unittest.main()
