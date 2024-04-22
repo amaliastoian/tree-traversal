@@ -1,7 +1,7 @@
 name: Run Tests
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
@@ -18,9 +18,14 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
       - name: Run unit tests
         run: python -m unittest
-        working-directory: . 
+        working-directory: .
 
       - name: Upload test results
         uses: actions/upload-artifact@v3.0.0
