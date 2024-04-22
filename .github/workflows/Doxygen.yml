@@ -1,0 +1,30 @@
+name: Generate Doxygen Documentation
+
+on:
+  push:
+    tags:
+      - 'v*' # Rulează doar când este creat un tag care începe cu 'v'
+
+jobs:
+  doxygen:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Doxygen
+        uses: maaft/doxygen-action@v1
+        with:
+          version: '1.9.1'
+
+      - name: Generate Doxygen documentation
+        run: |
+          doxygen Doxyfile
+        working-directory: .
+
+      - name: Upload documentation
+        uses: actions/upload-artifact@v3
+        with:
+          name: doxygen-docs
+          path: docs/html
